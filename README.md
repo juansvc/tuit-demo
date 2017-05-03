@@ -1,6 +1,6 @@
 ### 1 Intslar node:
 ```sh
-    sudo apt-get install node
+sudo apt-get install nodejs
 ```
 ### 2 Intslar npm
 ```sh
