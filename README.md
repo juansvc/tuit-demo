@@ -1,5 +1,5 @@
 - 1 Intslar node
-sudo apt-get install node
+    sudo apt-get install node
 
 - 2 Intslar npm
 sudo apt-get install npm
