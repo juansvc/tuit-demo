@@ -9,7 +9,12 @@ exports.addTuit = function(req, res) {
 		name:    req.body.name,
 		text: 	  req.body.text,
 		retweet_count:  req.body.rcount,
+<<<<<<< HEAD
 		favorite_count:   req.body.fcount		
+=======
+		favorite_count:   req.body.fcount,
+		date: req.body.user_update
+>>>>>>> master
 	});
 
 	tuit.save(function(err, tuit) {

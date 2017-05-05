@@ -3,6 +3,31 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.row{
+}
+
 a {
   color: #00B7FF;
+}
+
+#buscar{
+	margin-top: 1.2em;
+}
+
+h1{
+	text-align: center;
+}
+
+#tuit{
+	background-color: #eee;
+	margin: 2em;
+	text-align: center;
+}
+
+#contenedor_tuit{
+	height: 362px;
+}
+
+.caption h3{
+	color: #2196F3;
 }
