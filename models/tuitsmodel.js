@@ -4,7 +4,8 @@ exports = module.exports = function(app, mongoose) {
 		name: 		{ type: String },
 		text: 		{ type: Number },
 		retweet_count: 	{ type: String },
-		favorite_count:  { type: String }
+		favorite_count:  { type: String },
+		user_update: { type:String }
 	});
 
 	mongoose.model('Tuitsmodel', tuis_schema);
