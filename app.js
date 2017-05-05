@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Twit = require('twit');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -11,6 +12,8 @@ var tuitsearch = require('./routes/tuitsearch');
 var mongodb = require('./routes/mongodb');
 
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,14 +38,14 @@ app.use('/tuitsearch', tuitsearch);
 app.use('/mongodb', mongodb);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -52,9 +55,39 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+//twit confing
+var T = new Twit({
+  consumer_key: 'CtnSB5gksgtXqip74NjD6KD4p',
+  consumer_secret: '1tmULEY7tIDUi7ZrjcShsgkMyRQlyBcnF8hjAsihbk2QSFaJM7',
+  app_only_auth: true
+  //access_token: '	844261634-lPlhwjAWngSIIHPxqHhMpjM19MEA5fWtSiJFxFXG',
+  //access_token_secret: '7f4QDpgtwnvUPJBK8Sv9lOJMd8e02WpOzBJgwdxIv620Q'
+});
 
+io.on('connection', function(socket) {  
+    socket.emit('announcements', { message: 'A new user has joined!' });
+    socket.on('query', function(data){
+      console.log('Mensaje Cliente-> ', data.palabra+data.count);
+      buscar(data.palabra, data.count);
+    })
+    
+});
+
+var buscar = function(palabra, count){
+  console.log('buscar');
+  var stream = T.stream('statuses/sample')
+  stream.on('tweet', function (tweet) {
+    console.log('en el stream');
+    console.log(tweet);
+    socket.emit('tuits', {tuits: tweet});
+    console.log('despues en el stream');
+  });
+}
+
+
+module.exports = app;
+//server.listen(5000);
 var port = process.env.PORT || 5000;
-app.listen(port, function() {
+server.listen(port, function () {
   console.log('Listening on ' + port);
 });

@@ -1,52 +1,58 @@
 <!DOCTYPE html>
 <html lang="en-US" ng-app="tuitsmodulo">
-  <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
-      crossorigin="anonymous">
-    <script src="../javascripts/tuits.js"></script>
-  </head>
 
-  <body ng-controller="tuitscontroller">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+  <script src="../javascripts/tuits.js"></script>
 
-    <div class="row">
-      <div class="col-lg-8">
-      <div class="col-lg-4">
-        <div class="input-group">          
-          <input ng-model="name" type="text" class="form-control" placeholder="Search for...">
-        </div><!-- /input-group -->
-      </div><!-- /.col-lg-6 -->
-      <div class="col-lg-4">
-        <div class="input-group">
-          <input ng-model="count" type="text" class="form-control" placeholder="Search for...">
-          <span class="input-group-btn">
-            <button ng-click="buscar_tuits()" class="btn btn-default" type="button">Go!</button>
-          </span>
-        </div><!-- /input-group -->
-      </div><!-- /.col-lg-6 -->
-      </div>
-    </div><!-- /.row -->
-<!-- /.row 
-    <div>
-      <p>Texto : <input type="text" ng-model="name">{{name}}</p>
-      <p>Cuantos : <input type="text" ng-model="count">{{name}}</p>
-      <button ng-click="buscar_tuits()">Buscar</button>
-    </div>    
--->
-    <div class="row" ng-repeat="tuit in tuits">
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">          
-          <div class="caption">
-            <h3>{{tuit.user.name}}</h3>
-            <p>{{tuit.text}}</p>
-            <p>Retweet: {{tuit.retweet_count}}<p>
-            <p>Favorite: {{tuit.favorite_count}}<p>
-            <p><a href="#" class="btn btn-primary" role="button">Save</a> <a href="#" class="btn btn-default" role="button">View Tuit</a></p>
-          </div>
+  <script>  
+    
+</script>  
+</head>
+
+<body ng-controller="tuitscontroller">
+  <!-- buscador -->
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <form>
+        <div class="form-group">
+          <label>Palabra:</label>
+          <input type="text" class="form-control" ng-model="name" placeholder="Palabra">
         </div>
+
+        <div class="form-group">
+          <label>Count:</label>
+          <input type="text" class="form-control" ng-model="count" placeholder="Cantidad">
+        </div>
+        <button class="btn btn-default" type="submit" ng-click="buscar_tuits()">Buscar</button>
+        <button class="btn btn-default" type="submit" ng-click="pedirStreaming()">Streming</button>
+      </form>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <!-- fin buscador -->
+
+  <div class="row" ng-repeat="tuit in tuits">
+    <p></p>    
+    <div class="col-md-3"></div>
+    <div class="thumbnail col-md-6">
+      <div class="caption">
+        <h3>{{tuit.user.name}}</h3>
+        <p>{{tuit.text}}</p>
+        <p>Retweet: {{tuit.retweet_count}}</p>
+        <p>Favorite: {{tuit.favorite_count}}</p>
+        <a href="#" class="btn btn-primary" role="button">Save</a>
+        <a href="#" class="btn btn-default" role="button">View Tuit</a>
       </div>
     </div>
+    <div class="col-md-3"></div>
 
-  </body>
+  </div>
+
+</body>
+
 </html>
