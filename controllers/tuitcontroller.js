@@ -3,7 +3,7 @@ var TuitModel  = mongoose.model('Tuitsmodel');
 
 exports.addTuit = function(req, res) {
 	console.log('POST');
-	console.log(req.body);
+	console.log(req);
 
 	var tuit = new TuitModel({
 		name:    req.body.name,
