@@ -21,14 +21,8 @@ router.get('/', function(req, res, next) {
 });*/
 
 router.get('/all/:id/:count', function(req,res){
-    //res.send('users all'+req.params.id);
-    var params = {
-      q: req.params.id,
-      count: req.param.count  
-      //configurar parametros
-      
-    }
-    T.get('search/tweets', params, function(error, tweets, response){    
+    //res.send('users all'+req.params.id);    
+    T.get('search/tweets', {q: req.params.id, count: req.params.count, lang: 'es', result_type:'popular', locale: 'ecuador'}, function(error, tweets, response){
     res.status(200).json(tweets.statuses);
   });
 });

@@ -68,22 +68,37 @@ io.on('connection', function(socket) {
     socket.emit('announcements', { message: 'A new user has joined!' });
     socket.on('query', function(data){
       console.log('Mensaje Cliente-> ', data.palabra+data.count);
-      buscar(data.palabra, data.count);
+      buscar();
     })
     
 });
-
-var buscar = function(palabra, count){
-  console.log('buscar');
-  var stream = T.stream('statuses/sample')
+var stream = T.stream('statuses/filter', { track: ['macron'] });
+stream.on('connect', function(request){
+    console.log('connect');
+  });
+  stream.on('connected', function(response){
+    console.log('connected');
+  });
   stream.on('tweet', function (tweet) {
     console.log('en el stream');
     console.log(tweet);
-    socket.emit('tuits', {tuits: tweet});
+    //socket.emit('tuits', {tuits: tweet});
     console.log('despues en el stream');
   });
-}
+  stream.on('error', function(response){
+    console.log('error');
+    console.log(response);
+  });
+  stream.on('warning', function(response){
+    console.log('warning');
+    console.log(response);
+  });
 
+
+var buscar = function(){
+  console.log('buscar');
+  
+};
 
 module.exports = app;
 //server.listen(5000);

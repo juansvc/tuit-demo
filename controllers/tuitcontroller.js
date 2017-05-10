@@ -6,15 +6,13 @@ exports.addTuit = function(req, res) {
 	console.log(req);
 
 	var tuit = new TuitModel({
-		name:    req.body.name,
-		text: 	  req.body.text,
-		retweet_count:  req.body.rcount,
-<<<<<<< HEAD
-		favorite_count:   req.body.fcount		
-=======
-		favorite_count:   req.body.fcount,
-		date: req.body.user_update
->>>>>>> master
+		user_name:    req.body.user.name,
+		created_at: 	  req.body.created_at,
+		user_screen_name:  req.body.user.screen_name,
+		user_location:   req.body.user.location,
+		text: req.body.text,
+		retweet_count: req.body.retweet_count,
+		favorite_count: req.body.favorite_count
 	});
 
 	tuit.save(function(err, tuit) {
