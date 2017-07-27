@@ -16,7 +16,9 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 // Middlewares
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
@@ -28,7 +30,9 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -36,6 +40,15 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/tuitsearch', tuitsearch);
 app.use('/mongodb', mongodb);
+
+
+app.use(require('forest-express-mongoose').init({
+  modelsDir: __dirname + '/models', // Your models directory.
+  envSecret: process.env.FOREST_ENV_SECRET,
+  authSecret: process.env.FOREST_AUTH_SECRET,
+  mongoose: require('mongoose') // The mongoose database connection.
+}));
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -64,45 +77,49 @@ var T = new Twit({
   //access_token_secret: '7f4QDpgtwnvUPJBK8Sv9lOJMd8e02WpOzBJgwdxIv620Q'
 });
 
-io.on('connection', function(socket) {  
-    socket.emit('announcements', { message: 'A new user has joined!' });
-    socket.on('query', function(data){
-      console.log('Mensaje Cliente-> ', data.palabra+data.count);
-      buscar();
-    })
-    
+io.on('connection', function (socket) {
+  socket.emit('announcements', {
+    message: 'A new user has joined!'
+  });
+  socket.on('query', function (data) {
+    console.log('Mensaje Cliente-> ', data.palabra + data.count);
+    buscar();
+  })
+
 });
-var stream = T.stream('statuses/filter', { track: ['macron'] });
-stream.on('connect', function(request){
-    console.log('connect');
-  });
-  stream.on('connected', function(response){
-    console.log('connected');
-  });
-  stream.on('tweet', function (tweet) {
-    console.log('en el stream');
-    console.log(tweet);
-    //socket.emit('tuits', {tuits: tweet});
-    console.log('despues en el stream');
-  });
-  stream.on('error', function(response){
-    console.log('error');
-    console.log(response);
-  });
-  stream.on('warning', function(response){
-    console.log('warning');
-    console.log(response);
-  });
+var stream = T.stream('statuses/filter', {
+  track: ['macron']
+});
+
+stream.on('connect', function (request) {
+  console.log('connect');
+});
+stream.on('connected', function (response) {
+  console.log('connected');
+});
+stream.on('tweet', function (tweet) {
+  console.log('en el stream');
+  console.log(tweet);
+  console.log('despues en el stream');
+});
+stream.on('error', function (response) {
+  console.log('error');
+  console.log(response);
+});
+stream.on('warning', function (response) {
+  console.log('warning');
+  console.log(response);
+});
 
 
-var buscar = function(){
+var buscar = function () {
   console.log('buscar');
-  
+
 };
 
 module.exports = app;
 //server.listen(5000);
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 3000;
 server.listen(port, function () {
   console.log('Listening on ' + port);
 });

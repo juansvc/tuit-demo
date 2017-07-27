@@ -8,55 +8,81 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="../javascripts/tuits.js"></script>
+
 </head>
 
 <body ng-controller="tuitscontroller">
-  <h1>Extracción de Tweets</h1>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Palabras Clave:</label>
-        <input ng-model="name" type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <a class="navbar-brand" href="#">Cursos UTPL</a>
       </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Número de Tweets</label>
-        <input ng-model="count" type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="https://www.utpl.edu.ec/">Home</a></li>
+          <li><a href="https://www.utpl.edu.ec/utpl/informacion-general/historia">About</a></li>
+          <li><a href="https://www.utpl.edu.ec/directorio/">Contact</a></li>          
+        </ul>
       </div>
-      <button class="btn btn-default" type="submit" ng-click="buscar_tuits()">Buscar</button>
-      <button class="btn btn-default" type="submit" ng-click="pedirStreaming()">Stream</button>
+      <!--/.nav-collapse -->
     </div>
-  </div>
-  <br>
+  </nav>x
+
+
+ 
+
+
+  <h1>Extracción de Cursos</h1>
+  <a class="btn btn-primary" ng-click="leer_json()">Save Json</a>
+  <a class="btn btn-primary" ng-click="guardarTuit2()">Save Local</a>
+  
+  
 
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <!-- -->
+      <button class="btn btn-primary" ng-click="buscar_tuits()">Buscar</button>
       <div ng-repeat="tuit in tuits" id="tuuit">
-        <div class="col-md-6" id="contenedor_tuit">
+        <div class="col-md-4" id="contenedor_tuit">
           <div class="thumbnail">
             <div class="caption">
               <h3>{{tuit.user.name}}</h3>
               Tweet:<strong><p>{{tuit.created_at}}</p></strong>
               <p>Usuario: <strong>{{tuit.user.screen_name}}</strong></p>
-              <p>Location: <strong>{{tuit.user.location}}</strong></p>                          
+              <p>Location: <strong>{{tuit.user.location}}</strong></p>
               <p class="text-success">Texto: <strong>{{tuit.text}}</strong></p>
-              <p>Retweet: {{tuit.retweet_count}}</p>              
+              <p>Retweet: {{tuit.retweet_count}}</p>
               <p>Favorite: {{tuit.favorite_count}}</p>
-              <button class="btn btn-default" ng-click="guardarTuit(tuit)">Save</button>
-            </div>            
-          </div>          
-        </div>        
+              <a class="btn btn-primary" ng-click="guardarTuit(tuit)">Save</a>
+
+            </div>
+          </div>
+        </div>
       </div>
       <br>
       <br>
       <br>
       <br>
     </div>
-    <!-- -->
-    <div class="col-md-4"></div>
-    <p></p>
+    
   </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
 
 </body>
 
